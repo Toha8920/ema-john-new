@@ -2,25 +2,39 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import './Shop.css';
 import Product from '../Product/Product';
+import Cart from '../Cart/Cart';
+import { addToDb, getShoppingCart } from '../../utilities/fakedb';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
+    const [cart, setCart] = useState([]);
 
     useEffect(() => {
         fetch('products.json')
             .then(res => res.json())
             .then(data => setProducts(data))
+    }, []);
+
+    useEffect(() => {
+        const storedCart = getShoppingCart();
+        console.log(storedCart)
     }, [])
+
+    const handleAddToCart = (product) => {
+        const newCart = [...cart, product];
+        setCart(newCart);
+        addToDb(product.id);
+    }
 
     return (
         <div className='shop-container'>
             <div className="products-container">
                 {
-                    products.map(product => <Product product={product} key={product.id}></Product>)
+                    products.map(product => <Product product={product} key={product.id} handleAddToCart={handleAddToCart}></Product>)
                 }
             </div>
             <div className="cart-container">
-                <h3>Order summary</h3>
+                <Cart cart={cart} />
             </div>
         </div>
     );
