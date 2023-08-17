@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import "./Product.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 
 const Product = ({ product, handleAddToCart }) => {
-    const { id, img, name, price, seller, ratings } = product;
+    const { img, name, price, seller, ratings } = product;
     return (
         <div className='product'>
             <img src={img} alt="" />
